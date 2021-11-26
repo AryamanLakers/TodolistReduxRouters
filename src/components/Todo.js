@@ -1,43 +1,24 @@
-import React, { useState } from 'react';
-import TodoForm from './TodoForm';
+import React from 'react';
 import { RiCloseCircleLine } from 'react-icons/ri';
-import { TiEdit } from 'react-icons/ti';
+import {useSelector} from "react-redux"
 
-const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
-  const [edit, setEdit] = useState({
-    id: null,
-    value: ''
-  });
-
-  const submitUpdate = value => {
-    updateTodo(edit.id, value);
-    setEdit({
-      id: null,
-      value: ''
-    });
-  };
-
-  if (edit.id) {
-    return <TodoForm edit={edit} onSubmit={submitUpdate} />;
-  }
-
-  return todos.map((todo, index) => (
+const Todo = ({ removeTodo}) => {
+  const todos=useSelector((state)=>state.todos)
+  console.log(todos)
+  return todos.todos.map((todo, index) => (
     <div
-      className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
+      className='todo-row'
       key={index}
     >
-      <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-        {todo.text}
+      <div key={todo.id}>
+        {todo.title}
       </div>
       <div className='icons'>
         <RiCloseCircleLine
-          onClick={() => removeTodo(todo.id)}
+          onClick={(e) => {console.log(e);removeTodo(index)}}
           className='delete-icon'
         />
-        <TiEdit
-          onClick={() => setEdit({ id: todo.id, value: todo.text })}
-          className='edit-icon'
-        />
+        
       </div>
     </div>
   ));

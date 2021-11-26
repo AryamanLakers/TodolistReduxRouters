@@ -1,56 +1,65 @@
 import React, { useState } from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
+import {useDispatch} from "react-redux";
+import { addtodo, deletetodo, isLogin } from "../todoSlice"
+import {GoogleAPI, GoogleLogin, GoogleLogout} from 'react-google-oauth'
+//i have to make a store to keep todos array from
+//i will have 2 options: first to add,remove and updateTodo
+// function actionCreator(newlist){
+//   return {
+//     type:"todolist",
+//     todos:newlist
+//   }
+// }
 
 function TodoList() {
-  const [todos, setTodos] = useState([]);
-
+  const dispatch=useDispatch()
+  
   const addTodo = todo => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
     }
-
-    const newTodos = [todo, ...todos];
-
-    setTodos(newTodos);
-    console.log(...todos);
+   
+    dispatch(
+      addtodo({
+      title:todo.text
+    })
+    );
+    //const newTodos = [todo.text, ...store.getState().todos];
+    //store.dispatch(actionCreator(newTodos));//this would go to reducer
+    
   };
 
-  const updateTodo = (todoId, newValue) => {
-    if (!newValue.text || /^\s*$/.test(newValue.text)) {
-      return;
-    }
-
-    setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
-  };
-
+ 
+ 
   const removeTodo = id => {
-    const removedArr = [...todos].filter(todo => todo.id !== id);
-
-    setTodos(removedArr);
+    console.log(id)
+    dispatch(deletetodo({
+      index:id
+    }))
+    //const removedArr = [...store.getState().todos].filter((todo,ind) => ind !== id);
+   // console.log(removedArr,1223)
+   // store.dispatch(actionCreator(removedArr))
+    
   };
 
-  const completeTodo = id => {
-    let updatedTodos = todos.map(todo => {
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
-  };
-
+  
+  const onLogout=()=>{
+    dispatch(isLogin({status:false}))
+  }
   return (
-    <>
+    <div>
+      <GoogleAPI>
+          <GoogleLogout onLogoutSuccess={onLogout}/>
+      </GoogleAPI>
+      
       <h1>What's the Plan for Today?</h1>
       <TodoForm onSubmit={addTodo} />
       <Todo
-        todos={todos}
-        completeTodo={completeTodo}
         removeTodo={removeTodo}
-        updateTodo={updateTodo}
       />
-    </>
+    </div>
   );
 }
 
