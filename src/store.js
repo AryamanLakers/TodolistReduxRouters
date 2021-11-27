@@ -1,5 +1,4 @@
-import {createStore} from "redux"
-import reducer from "./reducers"
+
 import { configureStore } from '@reduxjs/toolkit'
 import todoReducer from "./todoSlice"
 

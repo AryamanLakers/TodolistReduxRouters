@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
 import {useDispatch} from "react-redux";
 import { addtodo, deletetodo, isLogin } from "../todoSlice"
-import {GoogleAPI, GoogleLogin, GoogleLogout} from 'react-google-oauth'
+import {GoogleAPI, GoogleLogout} from 'react-google-oauth'
 //i have to make a store to keep todos array from
 //i will have 2 options: first to add,remove and updateTodo
 // function actionCreator(newlist){
