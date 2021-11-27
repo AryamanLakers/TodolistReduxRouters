@@ -9,12 +9,13 @@ function Login() {
     const history=useNavigate()
     
     const func1=(e)=>{
-       console.log(e)
+       console.log(e,1)
     }
     const func2=(e)=>{
         console.log(e)
     }
     function testfunc(e){
+        console.log(e)
         dispatch(isLogin({status:true}))
         history('/todolist');
     }
