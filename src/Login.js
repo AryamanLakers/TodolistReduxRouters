@@ -19,6 +19,9 @@ function Login() {
         dispatch(isLogin({status:true}))
         history('/todolist');
     }
+    function problemFunc(e){
+        console.log(e)
+    }
     return (
         <div className="loginSetup">
             <GoogleAPI 
@@ -26,7 +29,7 @@ function Login() {
             onUpdateSigninStatus={func1}
             onInitFailure={func2} >
             <div>
-                <div className="googlebutton"><GoogleLogin onLoginSuccess={testfunc}/></div>
+                <div className="googlebutton"><GoogleLogin onLoginFailure={problemFunc} onLoginSuccess={testfunc}/></div>
             </div>
             </GoogleAPI>
         </div>
